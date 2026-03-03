@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسجّل القصص — مهند عثمان</title>
+<style>
+:root{--navy:#0f1f3d;--sky:#1a6ed8;--teal:#0d9e8a;--red:#e03434;--green:#0d9e5a;--bg:#f4f7fb;--white:#fff;--border:#dce4ef;--text:#1a2332;--muted:#5a6a80;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+header{background:var(--navy);color:#fff;padding:1.2rem 2rem;display:flex;align-items:center;gap:1rem;}
+.logo{width:40px;height:40px;background:linear-gradient(135deg,var(--sky),var(--teal));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;}
+header h1{font-size:1.1rem;font-weight:600;}
+header p{font-size:.75rem;color:rgba(255,255,255,.55);margin-top:.1rem;}
+
+.container{max-width:900px;margin:0 auto;padding:2rem 1.5rem;}
+
+/* Company list */
+.companies{display:flex;flex-direction:column;gap:1rem;}
+.company-card{background:var(--white);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.company-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.3rem;cursor:pointer;border-bottom:1px solid transparent;transition:background .15s;}
+.company-header:hover{background:#f8fafd;}
+.company-header.open{border-bottom-color:var(--border);}
+.ch-left{display:flex;align-items:center;gap:.8rem;}
+.ch-period{font-family:monospace;font-size:.7rem;color:var(--muted);background:var(--bg);padding:.2rem .5rem;border:1px solid var(--border);}
+.ch-name{font-weight:700;color:var(--navy);font-size:.95rem;}
+.ch-role{font-size:.75rem;color:var(--muted);margin-top:.1rem;}
+.ch-right{display:flex;align-items:center;gap:.6rem;}
+.story-count{font-size:.7rem;background:var(--sky);color:#fff;padding:.15rem .5rem;border-radius:20px;display:none;}
+.story-count.has{display:inline-block;}
+.chevron{color:var(--muted);transition:transform .25s;font-size:.9rem;}
+.chevron.open{transform:rotate(180deg);}
+
+/* Company body */
+.company-body{display:none;padding:1.3rem;}
+.company-body.open{display:block;}
+
+/* Recorder */
+.recorder{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:1.2rem;margin-bottom:1rem;}
+.rec-title{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem;}
+.rec-controls{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;}
+.btn-rec{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;border:none;border-radius:3px;cursor:pointer;font-size:.82rem;font-weight:600;transition:all .15s;}
+.btn-rec.start{background:var(--sky);color:#fff;}
+.btn-rec.start:hover{background:#155bbf;}
+.btn-rec.stop{background:var(--red);color:#fff;}
+.btn-rec.stop:hover{background:#c02020;}
+.btn-rec:disabled{opacity:.45;cursor:not-allowed;}
+.rec-status{display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--muted);}
+.rec-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);}
+.rec-dot.active{background:var(--red);animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.rec-timer{font-family:monospace;font-size:.82rem;color:var(--muted);}
+
+/* Draft area */
+.draft-area{margin-top:.9rem;}
+.draft-label{font-size:.7rem;color:var(--muted);margin-bottom:.4rem;}
+textarea{width:100%;min-height:110px;padding:.8rem;border:1px solid var(--border);border-radius:3px;font-family:inherit;font-size:.85rem;line-height:1.7;color:var(--text);resize:vertical;direction:rtl;}
+textarea:focus{outline:none;border-color:var(--sky);}
+.draft-actions{display:flex;gap:.5rem;margin-top:.6rem;justify-content:flex-end;}
+.btn-save{padding:.5rem 1.2rem;background:var(--teal);color:#fff;border:none;border-radius:3px;cursor:pointer;font-size:.8rem;font-weight:600;transition:background .15s;}
+.btn-save:hover{background:#0a856f;}
+.btn-clear{padding:.5rem .9rem;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:3px;cursor:pointer;font-size:.8rem;transition:all .15s;}
+.btn-clear:hover{background:var(--bg);border-color:var(--muted);}
+
+/* Saved stories */
+.saved-stories{display:flex;flex-direction:column;gap:.6rem;}
+.saved-label{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:.4rem;}
+.story-entry{background:var(--white);border:1px solid var(--border);border-right:3px solid var(--teal);border-radius:3px;padding:.9rem 1rem;}
+.story-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem;}
+.story-num{font-size:.68rem;font-family:monospace;color:var(--muted);}
+.story-date{font-size:.65rem;color:var(--muted);}
+.story-text{font-size:.85rem;line-height:1.75;color:var(--text);white-space:pre-wrap;}
+.story-actions{display:flex;gap:.4rem;margin-top:.6rem;justify-content:flex-end;}
+.btn-edit{padding:.3rem .7rem;background:var(--bg);border:1px solid var(--border);border-radius:3px;cursor:pointer;font-size:.72rem;color:var(--sky);}
+.btn-delete{padding:.3rem .7rem;background:var(--bg);border:1px solid var(--border);border-radius:3px;cursor:pointer;font-size:.72rem;color:var(--red);}
+
+/* No support */
+.no-support{background:#fff3cd;border:1px solid #ffc107;border-radius:4px;padding:1rem;font-size:.85rem;color:#856404;margin-bottom:1rem;}
+
+/* Export */
+.export-bar{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:1rem 1.3rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:gap;}
+.export-bar span{font-size:.82rem;color:var(--muted);}
+.btn-export{padding:.5rem 1.1rem;background:var(--navy);color:#fff;border:none;border-radius:3px;cursor:pointer;font-size:.8rem;font-weight:600;}
+.btn-export:hover{background:var(--sky);}
+
+/* hint */
+.hint{font-size:.72rem;color:var(--muted);margin-top:.4rem;padding:.4rem .6rem;background:#f0f4ff;border-radius:3px;border-right:2px solid var(--sky);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">MO</div>
+  <div>
+    <h1>مسجّل القصص المهنية</h1>
+    <p>مهند عثمان — سجّل قصتك مع كل شركة بصوتك</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="export-bar">
+    <span>💾 بعد ما تخلص، احفظ كل القصص كملف نصي</span>
+    <button class="btn-export" onclick="exportAll()">تصدير كل القصص</button>
+  </div>
+
+  <div id="noSupport" class="no-support" style="display:none;">
+    ⚠️ متصفحك لا يدعم التسجيل الصوتي. استخدم <strong>Chrome</strong> على الكمبيوتر للحصول على أفضل تجربة.
+  </div>
+
+  <div class="companies" id="companiesList"></div>
+</div>
+
+<script>
+var companies = [
+  { id:'aec',      period:'يوليو 2020 — حتى الآن', name:'AEC',                    role:'Senior .NET / SharePoint Developer' },
+  { id:'omnix',    period:'مايو 2018 — يوليو 2020', name:'Omnix Company',           role:'Senior Software Engineer' },
+  { id:'aot',      period:'مارس 2014 — مايو 2018',  name:'AOT / MASADER',          role:'Senior Software Engineer — CMA' },
+  { id:'smasip',   period:'أغسطس 2012 — أغسطس 2013',name:'SMAS-IP Company',        role:'Senior Software Engineer' },
+  { id:'estarta',  period:'فبراير 2012 — أغسطس 2012',name:'Estarta Solutions',     role:'Senior Software Engineer' },
+  { id:'sigma',    period:'يناير 2009 — فبراير 2012',name:'Sigmasoft',             role:'TTL / Senior Software Engineer — RCUAE' },
+  { id:'ibs',      period:'أبريل 2007 — يناير 2009', name:'IBS',                   role:'Senior Software Engineer' },
+  { id:'map',      period:'يناير 2006 — مارس 2007',  name:'MAP Design Company',    role:'Software Engineer' },
+  { id:'global',   period:'يونيو 2005 — يناير 2006', name:'Global Time Business Solutions', role:'Software Engineer' },
+];
+
+// Storage helpers
+function loadStories(id) {
+  try { return JSON.parse(localStorage.getItem('stories_' + id) || '[]'); } catch(e) { return []; }
+}
+function saveStories(id, arr) {
+  try { localStorage.setItem('stories_' + id, JSON.stringify(arr)); } catch(e) {}
+}
+
+// Speech recognition
+var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+var supported = !!SpeechRecognition;
+if (!supported) document.getElementById('noSupport').style.display = 'block';
+
+// Build UI
+var list = document.getElementById('companiesList');
+companies.forEach(function(co) {
+  var el = document.createElement('div');
+  el.className = 'company-card';
+  el.id = 'card_' + co.id;
+  el.innerHTML = buildCard(co);
+  list.appendChild(el);
+  renderStories(co.id);
+  updateCount(co.id);
+});
+
+function buildCard(co) {
+  return '<div class="company-header" onclick="toggleCard(\'' + co.id + '\')">' +
+    '<div class="ch-left">' +
+      '<div><div class="ch-period">' + co.period + '</div></div>' +
+      '<div><div class="ch-name">' + co.name + '</div><div class="ch-role">' + co.role + '</div></div>' +
+    '</div>' +
+    '<div class="ch-right">' +
+      '<span class="story-count" id="count_' + co.id + '">0 قصة</span>' +
+      '<span class="chevron" id="chev_' + co.id + '">▾</span>' +
+    '</div>' +
+  '</div>' +
+  '<div class="company-body" id="body_' + co.id + '">' +
+    (supported ? buildRecorder(co.id) : '') +
+    '<div class="draft-area">' +
+      '<div class="draft-label">✏️ النص (يمكنك الكتابة مباشرة أو تعديل ما سُجِّل)</div>' +
+      '<textarea id="draft_' + co.id + '" placeholder="اكتب أو سجّل قصتك هنا..."></textarea>' +
+      '<div class="hint">💡 تكلم بشكل طبيعي — التعرف على الكلام يعمل بشكل أفضل مع جمل كاملة</div>' +
+      '<div class="draft-actions">' +
+        '<button class="btn-clear" onclick="clearDraft(\'' + co.id + '\')">مسح المسودة</button>' +
+        '<button class="btn-save" onclick="saveStory(\'' + co.id + '\')">💾 حفظ القصة</button>' +
+      '</div>' +
+    '</div>' +
+    '<div id="stories_' + co.id + '" class="saved-stories" style="margin-top:1rem;"></div>' +
+  '</div>';
+}
+
+function buildRecorder(id) {
+  return '<div class="recorder">' +
+    '<div class="rec-title">🎙️ التسجيل الصوتي</div>' +
+    '<div class="rec-controls">' +
+      '<button class="btn-rec start" id="btnStart_' + id + '" onclick="startRec(\'' + id + '\')">▶ ابدأ التسجيل</button>' +
+      '<button class="btn-rec stop" id="btnStop_' + id + '" onclick="stopRec(\'' + id + '\')" disabled>⏹ إيقاف</button>' +
+      '<div class="rec-status"><div class="rec-dot" id="dot_' + id + '"></div><span id="status_' + id + '">جاهز</span></div>' +
+      '<div class="rec-timer" id="timer_' + id + '">00:00</div>' +
+    '</div>' +
+  '</div>';
+}
+
+// Toggle card
+function toggleCard(id) {
+  var body = document.getElementById('body_' + id);
+  var chev = document.getElementById('chev_' + id);
+  var hdr  = body.previousElementSibling;
+  var open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  hdr.classList.toggle('open', !open);
+  chev.classList.toggle('open', !open);
+}
+
+// Recording state
+var recState = {};
+
+function startRec(id) {
+  if (!supported) return;
+  if (recState[id] && recState[id].running) return;
+
+  var rec = new SpeechRecognition();
+  rec.lang = 'ar-SA';
+  rec.continuous = true;
+  rec.interimResults = true;
+
+  var draft = document.getElementById('draft_' + id);
+  var baseText = draft.value;
+  var interim = '';
+
+  rec.onresult = function(e) {
+    interim = '';
+    var final = '';
+    for (var i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) final += e.results[i][0].transcript + ' ';
+      else interim += e.results[i][0].transcript;
+    }
+    if (final) { baseText += final; }
+    draft.value = baseText + interim;
+    draft.scrollTop = draft.scrollHeight;
+  };
+
+  rec.onerror = function(e) {
+    setStatus(id, 'خطأ: ' + e.error, false);
+    stopRec(id);
+  };
+
+  rec.onend = function() {
+    if (recState[id] && recState[id].running) rec.start(); // keep alive
+  };
+
+  rec.start();
+  recState[id] = { rec: rec, running: true, startTime: Date.now(), timer: null };
+  recState[id].timer = setInterval(function() { updateTimer(id); }, 1000);
+
+  document.getElementById('btnStart_' + id).disabled = true;
+  document.getElementById('btnStop_' + id).disabled = false;
+  document.getElementById('dot_' + id).classList.add('active');
+  setStatus(id, 'جاري التسجيل...', true);
+}
+
+function stopRec(id) {
+  if (!recState[id]) return;
+  recState[id].running = false;
+  recState[id].rec.stop();
+  clearInterval(recState[id].timer);
+  recState[id] = null;
+
+  document.getElementById('btnStart_' + id).disabled = false;
+  document.getElementById('btnStop_' + id).disabled = true;
+  document.getElementById('dot_' + id).classList.remove('active');
+  setStatus(id, 'انتهى التسجيل ✓', false);
+  document.getElementById('timer_' + id).textContent = '00:00';
+}
+
+function setStatus(id, txt) {
+  var el = document.getElementById('status_' + id);
+  if (el) el.textContent = txt;
+}
+
+function updateTimer(id) {
+  if (!recState[id]) return;
+  var sec = Math.floor((Date.now() - recState[id].startTime) / 1000);
+  var m = String(Math.floor(sec / 60)).padStart(2, '0');
+  var s = String(sec % 60).padStart(2, '0');
+  document.getElementById('timer_' + id).textContent = m + ':' + s;
+}
+
+// Save / clear / delete
+function saveStory(id) {
+  var draft = document.getElementById('draft_' + id);
+  var txt = draft.value.trim();
+  if (!txt) { alert('المسودة فارغة!'); return; }
+  var stories = loadStories(id);
+  stories.push({ text: txt, date: new Date().toLocaleString('ar-SA') });
+  saveStories(id, stories);
+  draft.value = '';
+  renderStories(id);
+  updateCount(id);
+}
+
+function clearDraft(id) {
+  if (confirm('مسح المسودة؟')) document.getElementById('draft_' + id).value = '';
+}
+
+function deleteStory(id, idx) {
+  if (!confirm('حذف هذه القصة؟')) return;
+  var stories = loadStories(id);
+  stories.splice(idx, 1);
+  saveStories(id, stories);
+  renderStories(id);
+  updateCount(id);
+}
+
+function editStory(id, idx) {
+  var stories = loadStories(id);
+  var draft = document.getElementById('draft_' + id);
+  draft.value = stories[idx].text;
+  stories.splice(idx, 1);
+  saveStories(id, stories);
+  renderStories(id);
+  updateCount(id);
+  draft.focus();
+  draft.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function renderStories(id) {
+  var stories = loadStories(id);
+  var el = document.getElementById('stories_' + id);
+  if (!el) return;
+  if (!stories.length) { el.innerHTML = ''; return; }
+  var html = '<div class="saved-label">✅ القصص المحفوظة (' + stories.length + ')</div>';
+  stories.forEach(function(s, i) {
+    html += '<div class="story-entry">' +
+      '<div class="story-meta">' +
+        '<span class="story-num">قصة #' + (i + 1) + '</span>' +
+        '<span class="story-date">' + s.date + '</span>' +
+      '</div>' +
+      '<div class="story-text">' + escHtml(s.text) + '</div>' +
+      '<div class="story-actions">' +
+        '<button class="btn-edit" onclick="editStory(\'' + id + '\',' + i + ')">✏️ تعديل</button>' +
+        '<button class="btn-delete" onclick="deleteStory(\'' + id + '\',' + i + ')">🗑 حذف</button>' +
+      '</div>' +
+    '</div>';
+  });
+  el.innerHTML = html;
+}
+
+function updateCount(id) {
+  var stories = loadStories(id);
+  var el = document.getElementById('count_' + id);
+  if (!el) return;
+  if (stories.length) {
+    el.textContent = stories.length + ' قصة';
+    el.classList.add('has');
+  } else {
+    el.classList.remove('has');
+  }
+}
+
+function escHtml(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+// Export all
+function exportAll() {
+  var out = 'قصص مهند عثمان المهنية\n' + '='.repeat(40) + '\n\n';
+  var hasAny = false;
+  companies.forEach(function(co) {
+    var stories = loadStories(co.id);
+    if (!stories.length) return;
+    hasAny = true;
+    out += '■ ' + co.name + ' (' + co.period + ')\n';
+    out += co.role + '\n' + '-'.repeat(35) + '\n';
+    stories.forEach(function(s, i) {
+      out += '\nقصة #' + (i+1) + ' — ' + s.date + '\n' + s.text + '\n';
+    });
+    out += '\n' + '='.repeat(40) + '\n\n';
+  });
+  if (!hasAny) { alert('لا توجد قصص محفوظة بعد!'); return; }
+  var blob = new Blob([out], { type: 'text/plain;charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'mohanad-stories.txt';
+  a.click();
+}
+</script>
+</body>
+</html>
