@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohanad Othman — Senior Software Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0f1f3d;--sky:#1a6ed8;--sky-lt:#e8f0fb;--teal:#0d9e8a;--teal-lt:#e4f5f2;--text:#1a2332;--muted:#5a6a80;--border:#dce4ef;--bg:#f4f7fb;--white:#ffffff;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;}
+html[lang="ar"] body{font-family:'Tajawal',sans-serif;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;background:var(--white);border-bottom:2px solid var(--navy);display:flex;justify-content:space-between;align-items:center;padding:0 2.5rem;height:56px;}
+.nav-brand{display:flex;align-items:center;gap:.8rem;}
+.nav-initials{width:34px;height:34px;background:var(--navy);color:#fff;font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.nav-name{font-size:.88rem;font-weight:600;color:var(--navy);}
+.nav-right{display:flex;align-items:center;}
+.nav-links{display:flex;list-style:none;}
+.nav-links a{display:block;padding:0 1.1rem;height:56px;line-height:56px;font-size:.78rem;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.04em;text-transform:uppercase;border-left:1px solid var(--border);transition:background .15s,color .15s;white-space:nowrap;}
+html[lang="ar"] .nav-links a{border-left:none;border-right:1px solid var(--border);}
+.nav-links a:hover,.nav-links a:focus{background:var(--sky-lt);color:var(--sky);}
+.nav-cta{background:var(--navy)!important;color:#fff!important;display:inline-flex;align-items:center;gap:.4rem;}
+.nav-cta:hover{background:var(--sky)!important;}
+.lang-btn{height:56px;padding:0 1.1rem;border:none;border-left:1px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:700;color:var(--navy);letter-spacing:.06em;transition:background .15s;white-space:nowrap;}
+html[lang="ar"] .lang-btn{border-left:none;border-right:1px solid var(--border);letter-spacing:0;}
+.lang-btn:hover{background:var(--sky-lt);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;margin-left:.5rem;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--navy);transition:all .3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{display:none;position:fixed;top:56px;left:0;right:0;background:var(--white);border-bottom:2px solid var(--navy);z-index:299;flex-direction:column;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{padding:1rem 2rem;font-size:.85rem;font-weight:500;color:var(--text);text-decoration:none;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border);transition:background .15s;}
+.mobile-menu a:hover{background:var(--sky-lt);color:var(--sky);}
+
+/* LAYOUT */
+.page-wrap{display:grid;grid-template-columns:285px 1fr;min-height:100vh;padding-top:56px;}
+
+/* SIDEBAR */
+.sidebar{background:var(--navy);color:#fff;padding:2.2rem 1.8rem;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;display:flex;flex-direction:column;gap:1.8rem;}
+.sidebar::-webkit-scrollbar{width:3px;}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);}
+.sb-profile{text-align:center;padding-bottom:1.8rem;border-bottom:1px solid rgba(255,255,255,.1);}
+.sb-avatar{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,var(--sky),var(--teal));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:700;color:#fff;margin:0 auto 1rem;border:3px solid rgba(255,255,255,.15);}
+.sb-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;line-height:1.2;margin-bottom:.3rem;}
+html[lang="ar"] .sb-name{font-family:'Tajawal',sans-serif;font-size:1.2rem;}
+.sb-title{font-size:.7rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:1rem;}
+html[lang="ar"] .sb-title{letter-spacing:0;font-size:.78rem;}
+.sb-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(13,158,138,.2);border:1px solid rgba(13,158,138,.4);padding:.25rem .8rem;font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#5de8d4;}
+html[lang="ar"] .sb-badge{letter-spacing:0;font-size:.75rem;}
+.sb-dot{width:6px;height:6px;background:#5de8d4;border-radius:50%;animation:blink 1.5s infinite;flex-shrink:0;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.sb-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);}
+.sb-stat{background:rgba(255,255,255,.03);padding:.85rem;text-align:center;}
+.sb-stat-n{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:700;color:#fff;line-height:1;}
+.sb-stat-l{font-size:.58rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:.2rem;}
+html[lang="ar"] .sb-stat-l{letter-spacing:0;font-size:.68rem;}
+.sb-sec-title{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--sky);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;}
+html[lang="ar"] .sb-sec-title{letter-spacing:0;font-size:.72rem;}
+.sb-sec-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08);}
+.sb-contact-item{display:flex;align-items:center;gap:.7rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.06);text-decoration:none;transition:opacity .15s;color:inherit;}
+.sb-contact-item:hover{opacity:.75;}
+.sb-ci-icon{width:28px;height:28px;flex-shrink:0;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.55);}
+.sb-ci-label{font-size:.58rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.1rem;}
+html[lang="ar"] .sb-ci-label{letter-spacing:0;font-size:.68rem;}
+.sb-ci-val{font-size:.73rem;color:rgba(255,255,255,.75);word-break:break-all;}
+.sb-skill-item{margin-bottom:.85rem;}
+.sb-skill-top{display:flex;justify-content:space-between;margin-bottom:.3rem;}
+.sb-skill-name{font-size:.74rem;color:rgba(255,255,255,.8);font-weight:500;}
+.sb-skill-pct{font-size:.63rem;font-family:'DM Mono',monospace;color:rgba(255,255,255,.35);}
+.sb-skill-bar{height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;}
+.sb-skill-fill{height:100%;background:linear-gradient(90deg,var(--sky),var(--teal));border-radius:2px;width:0;transition:width 1.2s ease;}
+.sb-lang{display:flex;gap:.5rem;flex-wrap:wrap;}
+.sb-lang-tag{font-size:.7rem;padding:.2rem .7rem;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);}
+.sb-edu{padding:.9rem;background:rgba(255,255,255,.04);border-left:2px solid var(--sky);}
+html[lang="ar"] .sb-edu{border-left:none;border-right:2px solid var(--sky);}
+.sb-edu-year{font-family:'DM Mono',monospace;font-size:.63rem;color:var(--sky);margin-bottom:.2rem;}
+.sb-edu-deg{font-size:.82rem;font-weight:600;color:#fff;margin-bottom:.15rem;}
+.sb-edu-sub{font-size:.7rem;color:rgba(255,255,255,.45);}
+
+/* MAIN */
+.main{padding:2.5rem 3rem;display:flex;flex-direction:column;gap:3rem;}
+.sec-label{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--sky);margin-bottom:.4rem;}
+html[lang="ar"] .sec-label{letter-spacing:0;font-size:.75rem;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:700;color:var(--navy);line-height:1.1;}
+html[lang="ar"] .sec-title{font-family:'Tajawal',sans-serif;font-size:1.7rem;}
+.sec-rule{width:40px;height:3px;background:var(--navy);margin:.6rem 0 1.5rem;}
+
+/* ABOUT */
+.about-card{background:var(--navy);color:#fff;padding:2.2rem 2.5rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;}
+.about-headline{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;line-height:1.4;margin-bottom:.8rem;}
+html[lang="ar"] .about-headline{font-family:'Tajawal',sans-serif;font-size:1.3rem;line-height:1.7;}
+.about-headline span{color:#5de8d4;}
+.about-body{font-size:.88rem;color:rgba(255,255,255,.7);line-height:1.8;}
+.about-cta-group{display:flex;flex-direction:column;gap:.6rem;flex-shrink:0;}
+.btn-solid{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.5rem;background:#5de8d4;color:var(--navy);font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;white-space:nowrap;transition:all .15s;min-height:44px;}
+html[lang="ar"] .btn-solid{letter-spacing:0;font-size:.85rem;}
+.btn-solid:hover{background:#fff;}
+.btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.5rem;background:transparent;color:#fff;font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;white-space:nowrap;border:1px solid rgba(255,255,255,.3);transition:all .15s;min-height:44px;}
+html[lang="ar"] .btn-ghost{letter-spacing:0;font-size:.85rem;}
+.btn-ghost:hover{border-color:#fff;}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.skill-tile{background:var(--white);border:1px solid var(--border);padding:1.3rem 1.4rem;border-top:3px solid transparent;transition:border-color .2s,box-shadow .2s;}
+.skill-tile:hover{border-top-color:var(--sky);box-shadow:0 4px 20px rgba(26,110,216,.08);}
+.skill-tile.primary{border-top-color:var(--navy);}
+.st-icon-wrap{width:38px;height:38px;background:var(--sky-lt);border:1px solid #c5d8f5;display:flex;align-items:center;justify-content:center;color:var(--sky);margin-bottom:.8rem;}
+.skill-tile.primary .st-icon-wrap{background:var(--navy);border-color:var(--navy);color:#fff;}
+.st-title{font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:.35rem;}
+.st-desc{font-size:.75rem;color:var(--muted);line-height:1.5;margin-bottom:.7rem;}
+.st-tags{display:flex;flex-wrap:wrap;gap:.3rem;}
+.st-tag{font-size:.61rem;font-family:'DM Mono',monospace;padding:.15rem .5rem;background:var(--sky-lt);color:var(--sky);border:1px solid #c5d8f5;}
+.st-tag.core{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+/* EXPERIENCE */
+.exp-list{display:flex;flex-direction:column;}
+.exp-item{display:grid;grid-template-columns:130px 1fr;border-left:3px solid var(--border);padding:0 0 2.2rem 2rem;position:relative;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s;}
+html[lang="ar"] .exp-item{border-left:none;border-right:3px solid var(--border);padding:0 2rem 2.2rem 0;}
+.exp-item.visible{opacity:1;transform:translateY(0);}
+.exp-item::before{content:'';position:absolute;left:-6px;top:4px;width:9px;height:9px;background:var(--white);border:2px solid var(--muted);border-radius:50%;}
+html[lang="ar"] .exp-item::before{left:auto;right:-6px;}
+.exp-item.current::before{background:var(--sky);border-color:var(--sky);}
+.exp-item.current{border-left-color:var(--sky);}
+html[lang="ar"] .exp-item.current{border-left-color:var(--border);border-right-color:var(--sky);}
+.exp-date{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--muted);padding-top:.2rem;line-height:1.7;}
+.exp-header{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:.25rem;}
+.exp-role{font-size:.98rem;font-weight:700;color:var(--navy);}
+.exp-badge{font-size:.6rem;font-weight:600;letter-spacing:.08em;padding:.2rem .6rem;text-transform:uppercase;flex-shrink:0;}
+html[lang="ar"] .exp-badge{letter-spacing:0;font-size:.7rem;}
+.exp-badge.gov{background:var(--sky-lt);color:var(--sky);border:1px solid #c5d8f5;}
+.exp-badge.sp{background:var(--teal-lt);color:var(--teal);border:1px solid #b0e4de;}
+.exp-badge.inhouse{background:#fdf3e4;color:#c07a00;border:1px solid #f0c97a;}
+.exp-company{font-size:.78rem;color:var(--muted);margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem;}
+.exp-desc{font-size:.83rem;color:#3d4f66;line-height:1.7;}
+.exp-expand-btn{display:inline-flex;align-items:center;gap:.5rem;margin-top:.75rem;padding:.35rem .9rem;background:transparent;border:1px solid var(--border);color:var(--sky);font-size:.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:all .18s;font-family:'DM Sans',sans-serif;}
+html[lang="ar"] .exp-expand-btn{letter-spacing:0;font-size:.8rem;font-family:'Tajawal',sans-serif;}
+.exp-expand-btn:hover{background:var(--sky-lt);border-color:var(--sky);}
+.exp-details{max-height:0;overflow:hidden;transition:max-height .45s ease,opacity .3s;opacity:0;}
+.exp-details.open{max-height:2000px;opacity:1;}
+.exp-details-inner{margin-top:1rem;padding-top:1rem;border-top:1px dashed var(--border);display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+.exp-details-inner.single{grid-template-columns:1fr;}
+.detail-title{font-size:.63rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;}
+html[lang="ar"] .detail-title{letter-spacing:0;font-size:.72rem;}
+.role-list{list-style:none;display:flex;flex-direction:column;gap:.3rem;}
+.role-list li{font-size:.78rem;color:#3d4f66;line-height:1.5;padding-left:1rem;position:relative;}
+html[lang="ar"] .role-list li{padding-left:0;padding-right:1rem;}
+.role-list li::before{content:'▸';position:absolute;left:0;color:var(--sky);font-size:.65rem;top:.1em;}
+html[lang="ar"] .role-list li::before{left:auto;right:0;}
+.proj-tags{display:flex;flex-wrap:wrap;gap:.35rem;}
+.proj-tag{font-size:.63rem;font-family:'DM Mono',monospace;padding:.2rem .55rem;background:var(--navy);color:#fff;}
+.proj-tag.sp{background:#0d4f82;}
+.proj-tag.net{background:#1a4a1a;color:#7dcf7d;border:1px solid #3a7a3a;}
+.proj-tag.mvc{background:#4a2060;color:#cc88ff;border:1px solid #7a40a0;}
+.proj-tag.gov2{background:#1a4a6a;}
+
+/* CERTS */
+.cert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;}
+.cert-card{display:flex;align-items:flex-start;gap:1rem;background:var(--white);border:1px solid var(--border);border-left:4px solid var(--sky);padding:1rem 1.3rem;}
+html[lang="ar"] .cert-card{border-left:1px solid var(--border);border-right:4px solid var(--sky);}
+.cert-card.tr{border-left-color:var(--teal);}
+html[lang="ar"] .cert-card.tr{border-left-color:var(--border);border-right-color:var(--teal);}
+.cert-ico{width:36px;height:36px;flex-shrink:0;background:var(--sky-lt);border:1px solid #c5d8f5;display:flex;align-items:center;justify-content:center;color:var(--sky);}
+.cert-card.tr .cert-ico{background:var(--teal-lt);border-color:#b0e4de;color:var(--teal);}
+.cert-name{font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:.15rem;}
+.cert-issuer{font-size:.7rem;color:var(--muted);}
+
+/* CONTACT */
+.contact-banner{background:var(--sky);padding:2.5rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;}
+.cb-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:.4rem;}
+html[lang="ar"] .cb-title{font-family:'Tajawal',sans-serif;font-size:1.3rem;}
+.cb-sub{font-size:.85rem;color:rgba(255,255,255,.8);}
+.btn-white{padding:.85rem 2rem;background:#fff;color:var(--sky);font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;gap:.5rem;min-height:44px;transition:all .15s;}
+html[lang="ar"] .btn-white{letter-spacing:0;font-size:.88rem;}
+.btn-white:hover{background:var(--navy);color:#fff;}
+
+footer{background:var(--navy);color:rgba(255,255,255,.45);padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center;font-size:.7rem;font-family:'DM Mono',monospace;letter-spacing:.04em;}
+html[lang="ar"] footer{font-family:'Tajawal',sans-serif;letter-spacing:0;font-size:.78rem;}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.page-wrap{grid-template-columns:240px 1fr}.main{padding:2rem}.skills-grid{grid-template-columns:1fr 1fr}.about-card{grid-template-columns:1fr}.about-cta-group{flex-direction:row}.contact-banner{grid-template-columns:1fr}.cert-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}.page-wrap{grid-template-columns:1fr}.sidebar{position:static;height:auto;padding:2rem 1.5rem}.sb-stats{grid-template-columns:repeat(4,1fr)}.main{padding:1.5rem;gap:2rem}.skills-grid{grid-template-columns:1fr 1fr}.about-card{padding:1.5rem}.about-cta-group{flex-direction:row;flex-wrap:wrap}.btn-solid,.btn-ghost{flex:1}.exp-item{grid-template-columns:1fr;padding-left:1.5rem}.exp-details-inner{grid-template-columns:1fr}footer{flex-direction:column;gap:.5rem;padding:1.2rem 1.5rem;text-align:center}nav{padding:0 1.2rem}.cert-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.skills-grid{grid-template-columns:1fr}.sb-stats{grid-template-columns:repeat(2,1fr)}.about-cta-group{flex-direction:column}.btn-solid,.btn-ghost{width:100%}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-initials">MO</div>
+    <span class="nav-name" data-en="Mohanad Othman" data-ar="مهند عثمان">Mohanad Othman</span>
+  </div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#skills"     data-en="Skills"     data-ar="المهارات">Skills</a></li>
+      <li><a href="#experience" data-en="Experience" data-ar="الخبرات">Experience</a></li>
+      <li><a href="#contact"    data-en="Contact"    data-ar="تواصل">Contact</a></li>
+      <li><a href="mailto:mohanad.micro@gmail.com" class="nav-cta">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        <span data-en="Hire Me" data-ar="وظّفني">Hire Me</span>
+      </a></li>
+    </ul>
+    <button class="lang-btn" id="langBtn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <span id="langLabel">عربي</span>
+    </button>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#skills"     data-en="Skills"     data-ar="المهارات">Skills</a>
+  <a href="#experience" data-en="Experience" data-ar="الخبرات">Experience</a>
+  <a href="#contact"    data-en="Contact"    data-ar="تواصل">Contact</a>
+  <a href="mailto:mohanad.micro@gmail.com"   data-en="✉ Hire Me" data-ar="✉ وظّفني">✉ Hire Me</a>
+</div>
+
+<div class="page-wrap">
+<aside class="sidebar">
+  <div class="sb-profile">
+    <div class="sb-avatar">MO</div>
+    <div class="sb-name"  data-en="Mohanad Othman"                 data-ar="مهند عثمان">Mohanad Othman</div>
+    <div class="sb-title" data-en="Senior / Lead Software Engineer" data-ar="مهندس برمجيات أول / قائد تقني">Senior / Lead Software Engineer</div>
+    <div class="sb-badge"><div class="sb-dot"></div><span data-en="Available Now" data-ar="متاح الآن">Available Now</span></div>
+  </div>
+  <div>
+    <div class="sb-stats">
+      <div class="sb-stat"><div class="sb-stat-n">20<span style="font-size:1rem;opacity:.45">+</span></div><div class="sb-stat-l" data-en="Years"       data-ar="سنة">Years</div></div>
+      <div class="sb-stat"><div class="sb-stat-n">10<span style="font-size:1rem;opacity:.45">+</span></div><div class="sb-stat-l" data-en="Companies"   data-ar="شركة">Companies</div></div>
+      <div class="sb-stat"><div class="sb-stat-n">5<span  style="font-size:1rem;opacity:.45">+</span></div><div class="sb-stat-l" data-en="Gov. Clients" data-ar="عميل حكومي">Gov. Clients</div></div>
+      <div class="sb-stat"><div class="sb-stat-n">2</div>                                                   <div class="sb-stat-l" data-en="Countries"    data-ar="دولة">Countries</div></div>
+    </div>
+  </div>
+  <div>
+    <div class="sb-sec-title" data-en="Contact" data-ar="التواصل">Contact</div>
+    <a href="mailto:mohanad.micro@gmail.com" class="sb-contact-item">
+      <div class="sb-ci-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg></div>
+      <div><div class="sb-ci-label" data-en="Email" data-ar="البريد">Email</div><div class="sb-ci-val">mohanad.micro@gmail.com</div></div>
+    </a>
+    <a href="tel:+966598449443" class="sb-contact-item">
+      <div class="sb-ci-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.57 3.4 2 2 0 0 1 3.54 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.87-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg></div>
+      <div><div class="sb-ci-label" data-en="KSA" data-ar="السعودية">KSA</div><div class="sb-ci-val">+966 598 449 443</div></div>
+    </a>
+    <a href="tel:+962788450532" class="sb-contact-item">
+      <div class="sb-ci-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.57 3.4 2 2 0 0 1 3.54 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.87-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg></div>
+      <div><div class="sb-ci-label" data-en="Jordan" data-ar="الأردن">Jordan</div><div class="sb-ci-val">+962 788 450 532</div></div>
+    </a>
+    <div class="sb-contact-item" style="cursor:default;">
+      <div class="sb-ci-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+      <div><div class="sb-ci-label" data-en="Location" data-ar="الموقع">Location</div><div class="sb-ci-val" data-en="Riyadh, Saudi Arabia" data-ar="الرياض، المملكة العربية السعودية">Riyadh, Saudi Arabia</div></div>
+    </div>
+    <a href="https://linkedin.com/in/mohanad-othman" target="_blank" class="sb-contact-item">
+      <div class="sb-ci-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+      <div><div class="sb-ci-label">LinkedIn</div><div class="sb-ci-val">linkedin.com/in/mohanad</div></div>
+    </a>
+    <a href="https://mohanadothman.github.io/me/" target="_blank" class="sb-contact-item">
+      <div class="sb-ci-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div>
+      <div><div class="sb-ci-label">Portfolio</div><div class="sb-ci-val">mohanadothman.github.io</div></div>
+    </a>
+  </div>
+  <div>
+    <div class="sb-sec-title" data-en="Proficiency" data-ar="مستوى الإتقان">Proficiency</div>
+    <div class="sb-skill-item"><div class="sb-skill-top"><span class="sb-skill-name">.NET / Web API</span><span class="sb-skill-pct">95%</span></div><div class="sb-skill-bar"><div class="sb-skill-fill" data-w="95"></div></div></div>
+    <div class="sb-skill-item"><div class="sb-skill-top"><span class="sb-skill-name">SharePoint</span><span class="sb-skill-pct">95%</span></div><div class="sb-skill-bar"><div class="sb-skill-fill" data-w="95"></div></div></div>
+    <div class="sb-skill-item"><div class="sb-skill-top"><span class="sb-skill-name">SQL Server / ORM</span><span class="sb-skill-pct">90%</span></div><div class="sb-skill-bar"><div class="sb-skill-fill" data-w="90"></div></div></div>
+    <div class="sb-skill-item"><div class="sb-skill-top"><span class="sb-skill-name">Microservices</span><span class="sb-skill-pct">85%</span></div><div class="sb-skill-bar"><div class="sb-skill-fill" data-w="85"></div></div></div>
+    <div class="sb-skill-item"><div class="sb-skill-top"><span class="sb-skill-name">Angular / Frontend</span><span class="sb-skill-pct">75%</span></div><div class="sb-skill-bar"><div class="sb-skill-fill" data-w="75"></div></div></div>
+  </div>
+  <div>
+    <div class="sb-sec-title" data-en="Languages" data-ar="اللغات">Languages</div>
+    <div class="sb-lang">
+      <span class="sb-lang-tag" data-en="Arabic — Native"        data-ar="العربية — لغة أم">Arabic — Native</span>
+      <span class="sb-lang-tag" data-en="English — Professional" data-ar="الإنجليزية — احترافي">English — Professional</span>
+    </div>
+  </div>
+  <div>
+    <div class="sb-sec-title" data-en="Education" data-ar="التعليم">Education</div>
+    <div class="sb-edu">
+      <div class="sb-edu-year">2001 – 2005</div>
+      <div class="sb-edu-deg" data-en="B.Sc. Software Engineering" data-ar="بكالوريوس هندسة البرمجيات">B.Sc. Software Engineering</div>
+      <div class="sb-edu-sub" data-en="Philadelphia University, Amman · GPA: Very Good (82.5)" data-ar="جامعة فيلادلفيا، عمّان · المعدل: جيد جداً (82.5)">Philadelphia University, Amman · GPA: Very Good (82.5)</div>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+
+  <!-- ABOUT -->
+  <section>
+    <div class="about-card">
+      <div>
+        <div class="about-headline"
+          data-en='20+ years building <span>enterprise systems</span> that governments rely on.'
+          data-ar='أكثر من 20 عاماً في بناء <span>أنظمة مؤسسية</span> تعتمد عليها الحكومات.'>
+          20+ years building <span>enterprise systems</span> that governments rely on.
+        </div>
+        <div class="about-body"
+          data-en="Specialized in .NET Core, SharePoint on-premises, and microservices architecture. Proven track record delivering mission-critical platforms at SANG, PNU, CMA, and other government entities across Saudi Arabia and Jordan. Known for bridging technical depth with clear communication and reliable delivery."
+          data-ar="متخصص في .NET Core وSharePoint وهندسة الـ Microservices. سجل حافل في تسليم منصات حرجة في SANG وPNU وCMA وجهات حكومية في السعودية والأردن. يجمع بين العمق التقني والتواصل الواضح والتسليم الموثوق.">
+          Specialized in .NET Core, SharePoint on-premises, and microservices architecture. Proven track record delivering mission-critical platforms at SANG, PNU, CMA, and other government entities across Saudi Arabia and Jordan. Known for bridging technical depth with clear communication and reliable delivery.
+        </div>
+      </div>
+      <div class="about-cta-group">
+        <a href="mailto:mohanad.micro@gmail.com" class="btn-solid">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <span data-en="Hire Me Now" data-ar="وظّفني الآن">Hire Me Now</span>
+        </a>
+        <a href="#experience" class="btn-ghost"><span data-en="View Career ↓" data-ar="عرض المسيرة ↓">View Career ↓</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="sec-label" data-en="Technical Expertise" data-ar="الخبرة التقنية">Technical Expertise</div>
+    <div class="sec-title" data-en="Core Skills"         data-ar="المهارات الأساسية">Core Skills</div>
+    <div class="sec-rule"></div>
+    <div class="skills-grid">
+      <div class="skill-tile primary">
+        <div class="st-icon-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></div>
+        <div class="st-title" data-en="Backend Engineering" data-ar="هندسة الـ Backend">Backend Engineering</div>
+        <div class="st-desc"  data-en="Enterprise APIs and distributed systems at government scale." data-ar="واجهات API مؤسسية وأنظمة موزعة على نطاق حكومي.">Enterprise APIs and distributed systems at government scale.</div>
+        <div class="st-tags"><span class="st-tag core">.NET Core</span><span class="st-tag core">Web API</span><span class="st-tag core">Microservices</span><span class="st-tag">API Gateway</span><span class="st-tag">JWT</span><span class="st-tag">WCF</span></div>
+      </div>
+      <div class="skill-tile primary">
+        <div class="st-icon-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <div class="st-title" data-en="SharePoint Platform" data-ar="منصة SharePoint">SharePoint Platform</div>
+        <div class="st-desc"  data-en="10+ enterprise deployments across 4 major versions." data-ar="أكثر من 10 نشر مؤسسي عبر 4 إصدارات رئيسية.">10+ enterprise deployments across 4 major versions.</div>
+        <div class="st-tags"><span class="st-tag core">SP 2019</span><span class="st-tag core">SP 2016</span><span class="st-tag">SP 2013</span><span class="st-tag">SP 2010</span><span class="st-tag">NINTEX</span><span class="st-tag">K2</span></div>
+      </div>
+      <div class="skill-tile">
+        <div class="st-icon-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+        <div class="st-title" data-en="Data Layer" data-ar="طبقة البيانات">Data Layer</div>
+        <div class="st-desc"  data-en="High-performance database design and ORM patterns." data-ar="تصميم قواعد بيانات عالية الأداء وأنماط ORM.">High-performance database design and ORM patterns.</div>
+        <div class="st-tags"><span class="st-tag core">SQL Server</span><span class="st-tag">Entity Framework</span><span class="st-tag">Dapper</span><span class="st-tag">Oracle</span></div>
+      </div>
+      <div class="skill-tile">
+        <div class="st-icon-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <div class="st-title" data-en="Frontend" data-ar="واجهة المستخدم">Frontend</div>
+        <div class="st-desc"  data-en="Responsive UIs integrated tightly with backend systems." data-ar="واجهات متجاوبة مدمجة مع أنظمة الـ backend.">Responsive UIs integrated tightly with backend systems.</div>
+        <div class="st-tags"><span class="st-tag">Angular</span><span class="st-tag">jQuery</span><span class="st-tag">Bootstrap</span></div>
+      </div>
+      <div class="skill-tile">
+        <div class="st-icon-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+        <div class="st-title" data-en="BPM & Workflow" data-ar="BPM وأتمتة العمليات">BPM & Workflow</div>
+        <div class="st-desc"  data-en="Complex business process automation for large organizations." data-ar="أتمتة العمليات التجارية المعقدة للمنظمات الكبيرة.">Complex business process automation for large organizations.</div>
+        <div class="st-tags"><span class="st-tag">Workflow Foundation</span><span class="st-tag">Documentum</span><span class="st-tag">NINTEX</span><span class="st-tag">Captaris</span></div>
+      </div>
+      <div class="skill-tile">
+        <div class="st-icon-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
+        <div class="st-title" data-en="Architecture" data-ar="هندسة المعمارية">Architecture</div>
+        <div class="st-desc"  data-en="Clean, maintainable systems built to last." data-ar="أنظمة نظيفة وقابلة للصيانة مبنية للبقاء.">Clean, maintainable systems built to last.</div>
+        <div class="st-tags"><span class="st-tag">SOLID</span><span class="st-tag">Design Patterns</span><span class="st-tag">DDD</span><span class="st-tag">TDD</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="sec-label" data-en="Professional History" data-ar="المسيرة المهنية">Professional History</div>
+    <div class="sec-title" data-en="Work Experience"      data-ar="الخبرة العملية">Work Experience</div>
+    <div class="sec-rule"></div>
+    <div class="exp-list">
+
+      <!-- AEC -->
+      <div class="exp-item current">
+        <div class="exp-date">JUL 2020<br>— PRESENT</div>
+        <div>
+          <div class="exp-header">
+            <div class="exp-role" data-en="Senior .NET / SharePoint Developer" data-ar="مطور أول .NET / SharePoint">Senior .NET / SharePoint Developer</div>
+            <span class="exp-badge gov" data-en="Government" data-ar="حكومي">Government</span>
+          </div>
+          <div class="exp-company"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-en="AEC · Riyadh, Saudi Arabia" data-ar="شركة AEC · الرياض، السعودية">AEC · Riyadh, Saudi Arabia</span></div>
+          <div class="exp-desc" data-en="Deployed on large-scale national projects at SANG, PNU, and CMA. Architecting .NET 7/Angular solutions and SharePoint platforms, performing code reviews and solution architecture participation." data-ar="عمل على مشاريع وطنية كبيرة في SANG وPNU وCMA. تصميم حلول .NET 7 وAngular ومنصات SharePoint وإجراء مراجعات الكود والمشاركة في معمارية الحلول.">Deployed on large-scale national projects at SANG, PNU, and CMA. Architecting .NET 7/Angular solutions and SharePoint platforms, performing code reviews and solution architecture participation.</div>
+          <button class="exp-expand-btn" data-open="false"><svg class="chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg><span data-en="View Projects & Roles" data-ar="عرض المشاريع والأدوار">View Projects & Roles</span></button>
+          <div class="exp-details">
+            <div class="exp-details-inner">
+              <div>
+                <div class="detail-title" data-en="Key Responsibilities" data-ar="المسؤوليات الرئيسية">Key Responsibilities</div>
+                <ul class="role-list">
+                  <li data-en="Design & develop .NET 7 / Angular applications"                   data-ar="تصميم وتطوير تطبيقات .NET 7 / Angular">Design & develop .NET 7 / Angular applications</li>
+                  <li data-en="Design & develop SharePoint (SP 2016) solutions"                  data-ar="تصميم وتطوير حلول SharePoint SP 2016">Design & develop SharePoint (SP 2016) solutions</li>
+                  <li data-en="Write & review design documents, flag issues"                     data-ar="كتابة ومراجعة وثائق التصميم">Write & review design documents, flag issues</li>
+                  <li data-en="Develop key components and modules in .NET"                       data-ar="تطوير المكونات والوحدات الرئيسية في .NET">Develop key components and modules in .NET</li>
+                  <li data-en="Perform code reviews across the team"                             data-ar="إجراء مراجعات الكود للفريق">Perform code reviews across the team</li>
+                  <li data-en="Participate in solution architecture design"                      data-ar="المشاركة في تصميم معمارية الحلول">Participate in solution architecture design</li>
+                  <li data-en="Configure FBA, Search Service, MetaData & Excel Services"         data-ar="إعداد FBA والبحث وخدمات البيانات الوصفية">Configure FBA, Search Service, MetaData & Excel Services</li>
+                  <li data-en="Implement Common API reused across all projects"                  data-ar="تنفيذ Common API مشتركة لجميع المشاريع">Implement Common API reused across all projects</li>
+                </ul>
+              </div>
+              <div>
+                <div class="detail-title" data-en="Projects Delivered" data-ar="المشاريع المنجزة">Projects Delivered</div>
+                <div class="proj-tags">
+                  <span class="proj-tag net">apps.sang.gov.sa</span>
+                  <span class="proj-tag net">jobs.sang.gov.sa</span>
+                  <span class="proj-tag net">haras.sang.gov.sa</span>
+                  <span class="proj-tag net">watheq.sang.gov.sa</span>
+                  <span class="proj-tag sp">cma.org.sa (SP 2016)</span>
+                  <span class="proj-tag sp">CMA Intranet (SP 2016)</span>
+                  <span class="proj-tag sp">eService CMA — GA (SP 2013)</span>
+                  <span class="proj-tag sp">Investor Complaint (SP 2013)</span>
+                  <span class="proj-tag sp">Authorization (SP 2013)</span>
+                  <span class="proj-tag sp">Market Supervision (SP 2013)</span>
+                  <span class="proj-tag sp">MASAR (SP 2013)</span>
+                  <span class="proj-tag mvc">MAKKEN (MVC 5)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OMNIX -->
+      <div class="exp-item">
+        <div class="exp-date">MAY 2018<br>— JUL 2020</div>
+        <div>
+          <div class="exp-header">
+            <div class="exp-role" data-en="Senior Software Engineer" data-ar="مهندس برمجيات أول">Senior Software Engineer</div>
+            <span class="exp-badge sp">SharePoint</span>
+          </div>
+          <div class="exp-company"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-en="Omnix Company · Riyadh, Saudi Arabia" data-ar="شركة Omnix · الرياض، السعودية">Omnix Company · Riyadh, Saudi Arabia</span></div>
+          <div class="exp-desc" data-en="Designed and developed full SharePoint project applications for PV (Saudi Aramco affiliate) using Visual Studio 2015 and .NET Framework 4.0–4.5. Implemented Common API reused across all projects." data-ar="تصميم وتطوير تطبيقات SharePoint الكاملة لـ PV (تابعة لأرامكو) باستخدام VS 2015 و.NET 4.0–4.5. تنفيذ Common API مشتركة لجميع المشاريع.">Designed and developed full SharePoint project applications for PV (Saudi Aramco affiliate) using Visual Studio 2015 and .NET Framework 4.0–4.5. Implemented Common API reused across all projects.</div>
+          <button class="exp-expand-btn" data-open="false"><svg class="chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg><span data-en="View Projects & Roles" data-ar="عرض المشاريع والأدوار">View Projects & Roles</span></button>
+          <div class="exp-details">
+            <div class="exp-details-inner">
+              <div>
+                <div class="detail-title" data-en="Key Responsibilities" data-ar="المسؤوليات الرئيسية">Key Responsibilities</div>
+                <ul class="role-list">
+                  <li data-en="Design & develop SharePoint apps (VS 2015, .NET 4.0–4.5)" data-ar="تصميم وتطوير تطبيقات SharePoint">Design & develop SharePoint apps (VS 2015, .NET 4.0–4.5)</li>
+                  <li data-en="Write & review technical design documents"                  data-ar="كتابة ومراجعة وثائق التصميم التقني">Write & review technical design documents</li>
+                  <li data-en="Develop reusable .NET key components and modules"           data-ar="تطوير مكونات .NET قابلة لإعادة الاستخدام">Develop reusable .NET key components and modules</li>
+                  <li data-en="Perform code reviews and architecture participation"         data-ar="مراجعات الكود والمشاركة في المعمارية">Perform code reviews and architecture participation</li>
+                  <li data-en="Implement Common API for project-wide reuse"                data-ar="تنفيذ Common API لإعادة الاستخدام عبر المشاريع">Implement Common API for project-wide reuse</li>
+                </ul>
+              </div>
+              <div>
+                <div class="detail-title" data-en="Projects Delivered" data-ar="المشاريع المنجزة">Projects Delivered</div>
+                <div class="proj-tags">
+                  <span class="proj-tag sp">PV Intranet (SP 2016)</span>
+                  <span class="proj-tag sp">PV eService Solutions (SP 2016)</span>
+                  <span class="proj-tag sp">HR Services (SP 2016 + SQL + Oracle + WPF)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AOT / MASADER -->
+      <div class="exp-item">
+        <div class="exp-date">MAR 2014<br>— MAY 2018</div>
+        <div>
+          <div class="exp-header">
+            <div class="exp-role" data-en="Senior Software Engineer" data-ar="مهندس برمجيات أول">Senior Software Engineer</div>
+            <span class="exp-badge gov" data-en="CMA" data-ar="هيئة السوق المالية">CMA</span>
+          </div>
+          <div class="exp-company"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-en="AOT / MASADER Company · Riyadh, Saudi Arabia" data-ar="AOT / MASADER · الرياض، السعودية">AOT / MASADER Company · Riyadh, Saudi Arabia</span></div>
+          <div class="exp-desc" data-en="Led full-cycle software projects for the Capital Market Authority — iterative SharePoint and .NET Web Forms solutions, plus QA/Security collaboration for compliance and vulnerability remediation." data-ar="قاد مشاريع كاملة لهيئة السوق المالية — حلول SharePoint و.NET بالتعاون مع فرق QA والأمن لضمان الامتثال ومعالجة الثغرات.">Led full-cycle software projects for the Capital Market Authority — iterative SharePoint and .NET Web Forms solutions, plus QA/Security collaboration for compliance and vulnerability remediation.</div>
+          <button class="exp-expand-btn" data-open="false"><svg class="chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg><span data-en="View Projects & Roles" data-ar="عرض المشاريع والأدوار">View Projects & Roles</span></button>
+          <div class="exp-details">
+            <div class="exp-details-inner">
+              <div>
+                <div class="detail-title" data-en="Key Responsibilities" data-ar="المسؤوليات الرئيسية">Key Responsibilities</div>
+                <ul class="role-list">
+                  <li data-en="Design & develop SharePoint apps (VS 2010/2013, .NET 3.5–4.5)"   data-ar="تطوير SharePoint متعدد الإصدارات">Design & develop SharePoint apps (VS 2010/2013, .NET 3.5–4.5)</li>
+                  <li data-en="Design & develop ASP.NET 3.5–4.5 internet/intranet apps"          data-ar="تطوير تطبيقات ASP.NET للإنترنت والإنترانت">Design & develop ASP.NET 3.5–4.5 internet/intranet apps</li>
+                  <li data-en="Write & review design documents and technical specs"               data-ar="كتابة ومراجعة وثائق التصميم">Write & review design documents and technical specs</li>
+                  <li data-en="Perform code reviews and participate in architecture design"       data-ar="مراجعات الكود والمشاركة في المعمارية">Perform code reviews and participate in architecture design</li>
+                  <li data-en="SharePoint admin — FBA, Search, MetaData, Excel Services"         data-ar="إدارة SharePoint — FBA والبحث والبيانات الوصفية">SharePoint admin — FBA, Search, MetaData, Excel Services</li>
+                  <li data-en="Work with QA & Security teams on assessment and patches"          data-ar="التعاون مع فرق QA والأمن">Work with QA & Security teams on assessment and patches</li>
+                  <li data-en="Implement Common API used across all projects"                    data-ar="تنفيذ Common API لجميع المشاريع">Implement Common API used across all projects</li>
+                </ul>
+              </div>
+              <div>
+                <div class="detail-title" data-en="Projects Delivered" data-ar="المشاريع المنجزة">Projects Delivered</div>
+                <div class="proj-tags">
+                  <span class="proj-tag sp">cma.org.sa (SP 2010 → SP 2016)</span>
+                  <span class="proj-tag sp">CMA Intranet (SP 2010 → SP 2016)</span>
+                  <span class="proj-tag sp">eService MFOD (SP 2010 + Documentum)</span>
+                  <span class="proj-tag sp">GA (SP 2013 + SQL)</span>
+                  <span class="proj-tag sp">QFI (SP 2013 + SQL)</span>
+                  <span class="proj-tag sp">GDP (SP 2013 + SQL)</span>
+                  <span class="proj-tag sp">Investor Complaint (SP 2013)</span>
+                  <span class="proj-tag sp">Authorization (SP 2013)</span>
+                  <span class="proj-tag sp">Market Supervision (SP 2013)</span>
+                  <span class="proj-tag sp">Investigation (SP 2010 + Documentum)</span>
+                  <span class="proj-tag sp">Capital Market Authority Website</span>
+                  <span class="proj-tag mvc">eMorasalat (MVC)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SMAS-IP -->
+      <div class="exp-item">
+        <div class="exp-date">AUG 2012<br>— AUG 2013</div>
+        <div>
+          <div class="exp-header">
+            <div class="exp-role" data-en="Senior Software Engineer" data-ar="مهندس برمجيات أول">Senior Software Engineer</div>
+            <span class="exp-badge inhouse" data-en="In-House Dev" data-ar="تطوير داخلي">In-House Dev</span>
+          </div>
+          <div class="exp-company"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-en="SMAS-IP Company · Amman, Jordan" data-ar="شركة SMAS-IP · عمّان، الأردن">SMAS-IP Company · Amman, Jordan</span></div>
+          <div class="exp-desc" data-en="In-house SharePoint application development using Visual Studio 2010 and .NET Framework 3.5." data-ar="تطوير تطبيقات SharePoint داخلية باستخدام Visual Studio 2010 و.NET Framework 3.5.">In-house SharePoint application development using Visual Studio 2010 and .NET Framework 3.5.</div>
+          <button class="exp-expand-btn" data-open="false"><svg class="chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg><span data-en="View Projects" data-ar="عرض المشاريع">View Projects</span></button>
+          <div class="exp-details">
+            <div class="exp-details-inner single">
+              <div>
+                <div class="detail-title" data-en="Projects Delivered" data-ar="المشاريع المنجزة">Projects Delivered</div>
+                <div class="proj-tags">
+                  <span class="proj-tag sp">Printing Management System</span>
+                  <span class="proj-tag sp">Legacy System Enhancement & Maintenance</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESTARTA -->
+      <div class="exp-item">
+        <div class="exp-date">FEB 2012<br>— AUG 2012</div>
+        <div>
+          <div class="exp-header">
+            <div class="exp-role" data-en="Senior Software Engineer" data-ar="مهندس برمجيات أول">Senior Software Engineer</div>
+            <span class="exp-badge sp">SharePoint</span>
+          </div>
+          <div class="exp-company"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-en="Estarta Solutions · Amman, Jordan" data-ar="Estarta Solutions · عمّان، الأردن">Estarta Solutions · Amman, Jordan</span></div>
+          <div class="exp-desc" data-en="Designed and developed SharePoint applications using Visual Studio 2010 and .NET Framework 3.5. Configured Content Organizer and Document IDs features." data-ar="تصميم وتطوير تطبيقات SharePoint باستخدام VS 2010 و.NET 3.5. إعداد ميزات Content Organizer ومعرّفات المستندات.">Designed and developed SharePoint applications using Visual Studio 2010 and .NET Framework 3.5. Configured Content Organizer and Document IDs features.</div>
+          <button class="exp-expand-btn" data-open="false"><svg class="chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg><span data-en="View Projects" data-ar="عرض المشاريع">View Projects</span></button>
+          <div class="exp-details">
+            <div class="exp-details-inner single">
+              <div>
+                <div class="detail-title" data-en="Projects Delivered" data-ar="المشاريع المنجزة">Projects Delivered</div>
+                <div class="proj-tags">
+                  <span class="proj-tag sp">Laws & Policy Management System</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIGMASOFT -->
+      <div class="exp-item">
+        <div class="exp-date">JAN 2009<br>— FEB 2012</div>
+        <div>
+          <div class="exp-header">
+            <div class="exp-role" data-en="TTL / Senior Software Engineer" data-ar="قائد تقني / مهندس أول">TTL / Senior Software Engineer</div>
+            <span class="exp-badge gov" data-en="UAE Gov" data-ar="حكومة الإمارات">UAE Gov</span>
+          </div>
+          <div class="exp-company"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-en="Sigmasoft · Amman, Jordan" data-ar="Sigmasoft · عمّان، الأردن">Sigmasoft · Amman, Jordan</span></div>
+          <div class="exp-desc" data-en="Team Technical Lead — managed day-to-day planning, code reviews, architecture design, and team performance. Built government-scale enterprise systems for RCUAE in UAE using SharePoint and ASP.NET." data-ar="قائد الفريق التقني — إدارة التخطيط اليومي ومراجعات الكود والمعمارية وأداء الفريق. بناء أنظمة مؤسسية حكومية لـ RCUAE في الإمارات.">Team Technical Lead — managed day-to-day planning, code reviews, architecture design, and team performance. Built government-scale enterprise systems for RCUAE in UAE using SharePoint and ASP.NET.</div>
+          <button class="exp-expand-btn" data-open="false"><svg class="chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg><span data-en="View Projects & Roles" data-ar="عرض المشاريع والأدوار">View Projects & Roles</span></button>
+          <div class="exp-details">
+            <div class="exp-details-inner">
+              <div>
+                <div class="detail-title" data-en="Key Responsibilities" data-ar="المسؤوليات الرئيسية">Key Responsibilities</div>
+                <ul class="role-list">
+                  <li data-en="Manage day-to-day planning, operations, and problem-solving"   data-ar="إدارة التخطيط اليومي وحل المشكلات">Manage day-to-day planning, operations, and problem-solving</li>
+                  <li data-en="Prioritize and schedule development team work"                 data-ar="تحديد الأولويات وجدولة عمل الفريق">Prioritize and schedule development team work</li>
+                  <li data-en="Prepare project plans and track team progress"                data-ar="إعداد خطط المشاريع ومتابعة التقدم">Prepare project plans and track team progress</li>
+                  <li data-en="Prepare and organize team meetings and audits"                data-ar="تنظيم اجتماعات الفريق والمراجعات">Prepare and organize team meetings and audits</li>
+                  <li data-en="Develop CodeSmith templates to generate code"                 data-ar="تطوير قوالب CodeSmith لتوليد الكود">Develop CodeSmith templates to generate code</li>
+                  <li data-en="Implement business process automation (Captaris Workflow)"    data-ar="تنفيذ أتمتة العمليات (Captaris Workflow)">Implement business process automation (Captaris Workflow)</li>
+                  <li data-en="Develop and administer SharePoint workflows (Captaris APIs)"  data-ar="تطوير وإدارة مسارات عمل SharePoint">Develop and administer SharePoint workflows (Captaris APIs)</li>
+                  <li data-en="Configure SharePoint search, Excel Services, and web parts"   data-ar="إعداد البحث وخدمات Excel وWeb Parts">Configure SharePoint search, Excel Services, and web parts</li>
+                  <li data-en="Develop CAML-based SharePoint search web parts"               data-ar="تطوير Web Parts بحث CAML">Develop CAML-based SharePoint search web parts</li>
+                  <li data-en="Implement SharePoint API for folder/file management"          data-ar="تنفيذ SharePoint API لإدارة الملفات">Implement SharePoint API for folder/file management</li>
+                </ul>
+              </div>
+              <div>
+                <div class="detail-title" data-en="Projects Delivered" data-ar="المشاريع المنجزة">Projects Delivered</div>
+                <div class="proj-tags">
+                  <span class="proj-tag gov2">RCUAE — Enterprise System Solution</span>
+                  <span class="proj-tag gov2">rcuae.ae — External Portal</span>
+                  <span class="proj-tag net">First Aid & Community Safety (ECMS)</span>
+                  <span class="proj-tag net">Project Collaboration & Management (PCMS)</span>
+                  <span class="proj-tag net">Donation Management System (DMS)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IBS -->
+      <div class="exp-item">
+        <div class="exp-date">APR 2007<br>— JAN 2009</div>
+        <div>
+          <div class="exp-header"><div class="exp-role" data-en="Senior Software Engineer" data-ar="مهندس برمجيات أول">Senior Software Engineer</div></div>
+          <div class="exp-company"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-en="IBS (Internet Business Solutions) · Amman, Jordan" data-ar="IBS · عمّان، الأردن">IBS (Internet Business Solutions) · Amman, Jordan</span></div>
+          <div class="exp-desc" data-en="Designed and developed internet/intranet web applications using ASP.NET 2.0, with integration across multiple enterprise modules." data-ar="تصميم وتطوير تطبيقات ويب باستخدام ASP.NET 2.0 مع التكامل مع وحدات مؤسسية متعددة.">Designed and developed internet/intranet web applications using ASP.NET 2.0, with integration across multiple enterprise modules.</div>
+          <button class="exp-expand-btn" data-open="false"><svg class="chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg><span data-en="View Projects" data-ar="عرض المشاريع">View Projects</span></button>
+          <div class="exp-details">
+            <div class="exp-details-inner single">
+              <div>
+                <div class="detail-title" data-en="Projects Delivered" data-ar="المشاريع المنجزة">Projects Delivered</div>
+                <div class="proj-tags">
+                  <span class="proj-tag net">Products SMS — 07sms.com</span>
+                  <span class="proj-tag net">Task Management System</span>
+                  <span class="proj-tag net">IBSCalls — Time Attendance Integration</span>
+                  <span class="proj-tag net">Content Management System — jic.edu.sa</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAP DESIGN -->
+      <div class="exp-item">
+        <div class="exp-date">JAN 2006<br>— MAR 2007</div>
+        <div>
+          <div class="exp-header"><div class="exp-role" data-en="Software Engineer" data-ar="مهندس برمجيات">Software Engineer</div></div>
+          <div class="exp-company"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-en="MAP Design Company · Amman, Jordan" data-ar="MAP Design · عمّان، الأردن">MAP Design Company · Amman, Jordan</span></div>
+          <div class="exp-desc" data-en="Web and desktop applications using .NET 2.0 and ASP technologies." data-ar="تطبيقات ويب وسطح المكتب بـ .NET 2.0 وتقنيات ASP.">Web and desktop applications using .NET 2.0 and ASP technologies.</div>
+          <button class="exp-expand-btn" data-open="false"><svg class="chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg><span data-en="View Projects" data-ar="عرض المشاريع">View Projects</span></button>
+          <div class="exp-details">
+            <div class="exp-details-inner single">
+              <div>
+                <div class="detail-title" data-en="Projects Delivered" data-ar="المشاريع المنجزة">Projects Delivered</div>
+                <div class="proj-tags">
+                  <span class="proj-tag net">Content Management System</span>
+                  <span class="proj-tag net">ammanmall.jo</span>
+                  <span class="proj-tag net">eastern.com.jo</span>
+                  <span class="proj-tag net">bishil.com</span>
+                  <span class="proj-tag net">ERP — MapSoft System (Windows App)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GPT / GLOBAL TIME -->
+      <div class="exp-item" style="padding-bottom:0;">
+        <div class="exp-date">JUN 2005<br>— JAN 2006</div>
+        <div>
+          <div class="exp-header"><div class="exp-role" data-en="Software Engineer" data-ar="مهندس برمجيات">Software Engineer</div></div>
+          <div class="exp-company"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-en="Global Time Business Solutions · Amman, Jordan" data-ar="Global Time Business Solutions · عمّان، الأردن">Global Time Business Solutions · Amman, Jordan</span></div>
+          <div class="exp-desc" data-en="End-to-end desktop application development using .NET 1.0 with hardware integration — Caller systems and custom modem interfaces." data-ar="تطوير تطبيقات سطح مكتب باستخدام .NET 1.0 مع تكامل الأجهزة — أنظمة المتصلين وواجهات المودم.">End-to-end desktop application development using .NET 1.0 with hardware integration — Caller systems and custom modem interfaces.</div>
+          <button class="exp-expand-btn" data-open="false"><svg class="chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg><span data-en="View Projects" data-ar="عرض المشاريع">View Projects</span></button>
+          <div class="exp-details">
+            <div class="exp-details-inner single">
+              <div>
+                <div class="detail-title" data-en="Projects Delivered" data-ar="المشاريع المنجزة">Projects Delivered</div>
+                <div class="proj-tags">
+                  <span class="proj-tag net">Properties System (Desktop + Web, VB.NET)</span>
+                  <span class="proj-tag net">Water Management System (Desktop)</span>
+                  <span class="proj-tag net">Cars Organizer System (Desktop)</span>
+                  <span class="proj-tag net">Perfect Offers System (Desktop)</span>
+                  <span class="proj-tag net">Accounting System (.NET 2005)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section>
+    <div class="sec-label" data-en="Credentials"              data-ar="المؤهلات">Credentials</div>
+    <div class="sec-title" data-en="Certifications & Training" data-ar="الشهادات والتدريب">Certifications & Training</div>
+    <div class="sec-rule"></div>
+    <div class="cert-grid">
+      <div class="cert-card">
+        <div class="cert-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div>
+          <div class="cert-name" data-en="MCTS — Microsoft Certified Technology Specialist" data-ar="MCTS — أخصائي تقنية مايكروسوفت المعتمد">MCTS — Microsoft Certified Technology Specialist</div>
+          <div class="cert-issuer" data-en="Windows Application · Sep 2007  |  Web Application · Sep 2006" data-ar="تطبيقات Windows · سبتمبر 2007 | تطبيقات الويب · سبتمبر 2006">Windows Application · Sep 2007 &nbsp;|&nbsp; Web Application · Sep 2006</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <div>
+          <div class="cert-name" data-en="MCP — Microsoft Certified Professional" data-ar="MCP — محترف مايكروسوفت المعتمد">MCP — Microsoft Certified Professional</div>
+          <div class="cert-issuer" data-en="VB.NET 2005 · Aug 2006" data-ar="VB.NET 2005 · أغسطس 2006">VB.NET 2005 · Aug 2006</div>
+        </div>
+      </div>
+      <div class="cert-card tr">
+        <div class="cert-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+        <div>
+          <div class="cert-name" data-en="Microsoft SharePoint 2007 Training" data-ar="تدريب Microsoft SharePoint 2007">Microsoft SharePoint 2007 Training</div>
+          <div class="cert-issuer" data-en="Nov 2008 – Jan 2009" data-ar="نوفمبر 2008 – يناير 2009">Nov 2008 – Jan 2009</div>
+        </div>
+      </div>
+      <div class="cert-card tr">
+        <div class="cert-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <div>
+          <div class="cert-name" data-en="Certified Project Management (CPM)" data-ar="إدارة المشاريع المعتمدة (CPM)">Certified Project Management (CPM)</div>
+          <div class="cert-issuer" data-en="Aug 2008" data-ar="أغسطس 2008">Aug 2008</div>
+        </div>
+      </div>
+      <div class="cert-card tr">
+        <div class="cert-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg></div>
+        <div>
+          <div class="cert-name" data-en="CCNA & Solaris 8 SA-118" data-ar="CCNA وSolaris 8 SA-118">CCNA & Solaris 8 SA-118</div>
+          <div class="cert-issuer" data-en="Cisco / Sun Microsystems · Jun – Jul 2003" data-ar="Cisco / Sun Microsystems · يونيو – يوليو 2003">Cisco / Sun Microsystems · Jun – Jul 2003</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-banner">
+      <div>
+        <div class="cb-title" data-en="Ready to bring 20+ years of enterprise expertise to your team." data-ar="مستعد لإضافة أكثر من 20 عاماً من الخبرة المؤسسية لفريقك.">Ready to bring 20+ years of enterprise expertise to your team.</div>
+        <div class="cb-sub"   data-en="Available for full-time or contract roles · Riyadh-based · Open to remote" data-ar="متاح للدوام الكامل أو العقود · الرياض · منفتح على العمل عن بُعد">Available for full-time or contract roles · Riyadh-based · Open to remote</div>
+      </div>
+      <a href="mailto:mohanad.micro@gmail.com" class="btn-white">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg>
+        <span data-en="Get In Touch →" data-ar="تواصل معي ←">Get In Touch →</span>
+      </a>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<footer>
+  <span data-en="© 2025 Mohanad Othman — Senior/Lead Software Engineer" data-ar="© 2025 مهند عثمان — مهندس برمجيات أول">© 2025 Mohanad Othman — Senior/Lead Software Engineer</span>
+  <span data-en="Riyadh, Saudi Arabia · mohanad.micro@gmail.com" data-ar="الرياض، السعودية · mohanad.micro@gmail.com">Riyadh, Saudi Arabia · mohanad.micro@gmail.com</span>
+</footer>
+
+<script>
+var lang = 'en';
+
+/* Language toggle */
+document.getElementById('langBtn').addEventListener('click', function() {
+  lang = lang === 'en' ? 'ar' : 'en';
+  var html = document.documentElement;
+  html.setAttribute('lang', lang);
+  html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+  document.getElementById('langLabel').textContent = lang === 'ar' ? 'EN' : 'عربي';
+  document.querySelectorAll('[data-en][data-ar]').forEach(function(el) {
+    el.innerHTML = el.getAttribute('data-' + lang) || el.innerHTML;
+  });
+});
+
+/* Hamburger */
+var hb = document.getElementById('hamburger');
+var mm = document.getElementById('mobileMenu');
+hb.addEventListener('click', function() { hb.classList.toggle('open'); mm.classList.toggle('open'); });
+mm.querySelectorAll('a').forEach(function(a) {
+  a.addEventListener('click', function() { hb.classList.remove('open'); mm.classList.remove('open'); });
+});
+
+/* Expand / collapse */
+document.querySelectorAll('.exp-expand-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var details = btn.nextElementSibling;
+    var open = btn.getAttribute('data-open') === 'true';
+    var chev = btn.querySelector('.chev');
+    var lbl  = btn.querySelector('span');
+    if (open) {
+      details.classList.remove('open');
+      btn.setAttribute('data-open', 'false');
+      if (chev) chev.style.transform = '';
+      lbl.setAttribute('data-en', lbl._oEn || 'View Projects & Roles');
+      lbl.setAttribute('data-ar', lbl._oAr || 'عرض المشاريع والأدوار');
+      lbl.textContent = lang === 'ar' ? (lbl._oAr || 'عرض المشاريع والأدوار') : (lbl._oEn || 'View Projects & Roles');
+    } else {
+      details.classList.add('open');
+      btn.setAttribute('data-open', 'true');
+      if (chev) chev.style.transform = 'rotate(180deg)';
+      lbl._oEn = lbl.getAttribute('data-en');
+      lbl._oAr = lbl.getAttribute('data-ar');
+      lbl.setAttribute('data-en', 'Hide Details');
+      lbl.setAttribute('data-ar', 'إخفاء التفاصيل');
+      lbl.textContent = lang === 'ar' ? 'إخفاء التفاصيل' : 'Hide Details';
+    }
+  });
+});
+
+/* Skill bars */
+var barObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) { e.target.style.width = e.target.dataset.w + '%'; barObs.unobserve(e.target); }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.sb-skill-fill').forEach(function(f) { barObs.observe(f); });
+
+/* Timeline fade-in */
+var expObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e, i) {
+    if (e.isIntersecting) {
+      setTimeout(function() { e.target.classList.add('visible'); }, i * 60);
+      expObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.05 });
+document.querySelectorAll('.exp-item').forEach(function(el) { expObs.observe(el); });
+</script>
+</body>
+</html>
